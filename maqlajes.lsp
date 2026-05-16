@@ -10,7 +10,7 @@
   )
 
   ;; ================================
-  ;; SELEÇÃO MANUAL
+  ;; SELEï¿½ï¿½O MANUAL
   ;; ================================
   (princ "\nSelecione os objetos da laje...")
   (setq ss (ssget))
@@ -19,7 +19,7 @@
   )
 
   ;; ================================
-  ;; FASE 1 – DELETAR LAYERS
+  ;; FASE 1 ï¿½ DELETAR LAYERS
   ;; ================================
   (command "_.ERASE"
            (ssget "X" '((8 . "PA_DIV_BLO")))
@@ -27,11 +27,17 @@
   )
 
   ;; ================================
-  ;; FASE 1 – MOVIMENTAÇÕES (EM LOTE)
+  ;; FASE 1 ï¿½ MOVIMENTAï¿½ï¿½ES (EM LOTE)
   ;; ================================
-  (if (ssget "X" '((8 . "ARR_LONG_INF_TXT")))
+  (if (ssget "X" '((-4 . "<AND>")
+                   (8 . "ARR_LONG_INF_TXT")
+                   (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
+                   (-4 . "AND>")))
     (command "_.MOVE"
-             (ssget "X" '((8 . "ARR_LONG_INF_TXT")))
+             (ssget "X" '((-4 . "<AND>")
+                          (8 . "ARR_LONG_INF_TXT")
+                          (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
+                          (-4 . "AND>")))
              ""
              '(0 0 0)
              '(0 25 0))
@@ -46,7 +52,7 @@
   )
 
   ;; ================================
-  ;; FASE 2 – EDIÇÃO DE TEXTOS
+  ;; FASE 2 ï¿½ EDIï¿½ï¿½O DE TEXTOS
   ;; ================================
   (setq i 0)
   (repeat (sslength ss)
@@ -93,6 +99,6 @@
     (setq i (1+ i))
   )
 
-  (princ "\nMAQLAJES concluído com sucesso.")
+  (princ "\nMAQLAJES concluï¿½do com sucesso.")
   (princ)
 )
