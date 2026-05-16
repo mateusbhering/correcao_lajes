@@ -6,7 +6,7 @@ Macro em AutoLISP para padronização automática de textos e layers em projetos
 
 1. **Cria o estilo de texto ROMANS** caso ainda não exista no desenho.
 2. **Apaga objetos do layer `PA_DIV_BLO`** (divisórias de bloco desnecessárias).
-3. **Move textos de armadura** para posições padrão:
+3. **Move textos de armadura** para posições padrão (elementos com altura 10 não são movidos):
    - Layer `ARR_LONG_INF_TXT` → deslocamento de +25 mm em Y
    - Layer `ARR_TRANS_INF_TXT` → deslocamento de -25 mm em X
 4. **Edita todos os textos selecionados** (TEXT e MTEXT):
