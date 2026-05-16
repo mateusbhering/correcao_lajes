@@ -1,6 +1,6 @@
 (vl-load-com)
 
-(defun c:MAQLAJES ( / ss i ent ed tipo lay alt txt)
+(defun c:MAQLAJES ( / ss i ent ed tipo lay alt txt ss-all ss-move j ent-j ed-j)
 
   ;; ================================
   ;; CRIAR ESTILO ROMANS
@@ -27,34 +27,47 @@
   )
 
   ;; ================================
-  ;; FASE 1 � MOVIMENTA��ES (EM LOTE)
+  ;; FASE 1 - MOVIMENTAÇÕES (EM LOTE)
   ;; ================================
-  (if (ssget "X" '((-4 . "<AND>")
-                   (8 . "ARR_LONG_INF_TXT")
-                   (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
-                   (-4 . "AND>")))
-    (command "_.MOVE"
-             (ssget "X" '((-4 . "<AND>")
-                          (8 . "ARR_LONG_INF_TXT")
-                          (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
-                          (-4 . "AND>")))
-             ""
-             '(0 0 0)
-             '(0 25 0))
+
+  ;; ARR_LONG_INF_TXT: move para cima em 25 (exceto altura 10)
+  (setq ss-all (ssget "X" '((8 . "ARR_LONG_INF_TXT"))))
+  (if ss-all
+    (progn
+      (setq ss-move (ssadd))
+      (setq j 0)
+      (repeat (sslength ss-all)
+        (setq ent-j (ssname ss-all j))
+        (setq ed-j  (entget ent-j))
+        (if (not (equal (cdr (assoc 40 ed-j)) 10.0 0.001))
+          (ssadd ent-j ss-move)
+        )
+        (setq j (1+ j))
+      )
+      (if (> (sslength ss-move) 0)
+        (command "_.MOVE" ss-move "" '(0 0 0) '(0 25 0))
+      )
+    )
   )
 
-  (if (ssget "X" '((-4 . "<AND>")
-                   (8 . "ARR_TRANS_INF_TXT")
-                   (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
-                   (-4 . "AND>")))
-    (command "_.MOVE"
-             (ssget "X" '((-4 . "<AND>")
-                          (8 . "ARR_TRANS_INF_TXT")
-                          (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
-                          (-4 . "AND>")))
-             ""
-             '(0 0 0)
-             '(-25 0 0))
+  ;; ARR_TRANS_INF_TXT: move para esquerda em 25 (exceto altura 10)
+  (setq ss-all (ssget "X" '((8 . "ARR_TRANS_INF_TXT"))))
+  (if ss-all
+    (progn
+      (setq ss-move (ssadd))
+      (setq j 0)
+      (repeat (sslength ss-all)
+        (setq ent-j (ssname ss-all j))
+        (setq ed-j  (entget ent-j))
+        (if (not (equal (cdr (assoc 40 ed-j)) 10.0 0.001))
+          (ssadd ent-j ss-move)
+        )
+        (setq j (1+ j))
+      )
+      (if (> (sslength ss-move) 0)
+        (command "_.MOVE" ss-move "" '(0 0 0) '(-25 0 0))
+      )
+    )
   )
 
   ;; ================================
