@@ -43,9 +43,15 @@
              '(0 25 0))
   )
 
-  (if (ssget "X" '((8 . "ARR_TRANS_INF_TXT")))
+  (if (ssget "X" '((-4 . "<AND>")
+                   (8 . "ARR_TRANS_INF_TXT")
+                   (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
+                   (-4 . "AND>")))
     (command "_.MOVE"
-             (ssget "X" '((8 . "ARR_TRANS_INF_TXT")))
+             (ssget "X" '((-4 . "<AND>")
+                          (8 . "ARR_TRANS_INF_TXT")
+                          (-4 . "<NOT>") (40 . 10.0) (-4 . "NOT>")
+                          (-4 . "AND>")))
              ""
              '(0 0 0)
              '(-25 0 0))
